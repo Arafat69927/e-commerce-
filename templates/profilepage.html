@@ -1,0 +1,41 @@
+{% comment %} {% extends 'master/base.html' %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block body %}
+  <h1 class="page-title">Profile</h1>
+
+  <div class="form-card glass-card">
+    <div style="display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap;">
+      <div style="min-width:240px; flex:1;">
+        <div style="font-size:1.25rem; font-weight:700; margin-bottom:8px;">
+          {{ request.user.username }}
+        </div>
+        <div style="color:var(--muted); margin-bottom:14px;">
+          User Type: <span style="color:#93c5fd">{{ request.user.user_type }}</span>
+        </div>
+
+        <div class="custom-badge" style="border-radius:14px; margin-bottom:0;">
+          ✨ Welcome back!
+        </div>
+      </div>
+
+      <div style="min-width:260px; flex:1;">
+        {% if request.user.user_type == "Seller" %}
+          <a class="btn btn-primary-custom" href="{% url 'categoty_product' %}">Category Product</a>
+        {% elif request.user.user_type == "Customer" %}
+          <a class="btn btn-accent-custom" href="{% url 'add_category' %}">Add Category</a>
+        {% else request.user.user_type == "Customer" %}
+          <div style="color:var(--muted);">No profile actions available.</div>
+        {% endif %}
+
+        <div style="margin-top:18px; color:var(--muted); line-height:1.5;">
+          Account actions are available from the navbar.
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock body %}
+
+     {% endcomment %}

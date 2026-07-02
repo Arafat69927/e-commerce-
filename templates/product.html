@@ -1,0 +1,47 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+
+<a href="{% url 'addproduct' %}" class="btn btn-primary btn-sm">+ add addproduct</a>
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Sl</th>
+      <th scope="col">seller</th>
+      <th scope="col">category</th>
+      <th scope="col">product_name</th>
+      <th scope="col">product_description</th>
+      <th scope="col">product_image</th>
+      <th scope="col">price</th>
+      <th scope="col">stock_quantity</th>
+      <th scope="col">created_at</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+
+{% for i in pro_dic %}
+    <th scope="row">{{forloop.counter}}</th>
+     <td>{{i.seller}}</td>
+      <td>{{i.category}}</td>
+       <td>{{i.product_name}}</td>  
+      <td>{{i.product_description}}</td>
+       <td>
+        <img src="/{{i.product_image}}" width="65px">
+      </td>
+         <td>{{i.price}}</td>
+      <td>{{i.stock_quantity}}</td>
+       <td>{{i.created_at}}</td>
+       <td>
+        <a href="{% url 'delete' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+        {% comment %} <a href="{% url 'edit' i.id %}" class="btn btn-secondary btn-sm">Edit</a> {% endcomment %}
+       </td>
+    </tr>
+{% endfor %}
+    
+ 
+  </tbody>
+</table>
+{% endblock content %}
+    

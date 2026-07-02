@@ -1,0 +1,50 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+
+  <div class="form-card glass-card">
+    <h2 class="page-title" style="font-size:2rem; margin:0 0 18px;">Add Listing</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="jobTitle">seller</label>
+                <input type="text" class="form-control" name="seller"  required>
+            </div>
+            <div class="form-group">
+                <label for="companyName">category</label>
+                <input type="text" class="form-control" name="category"  required>
+            </div>
+             <div class="form-group">
+                <label for="jobTitle">product_name</label>
+                <input type="text" class="form-control" name="product_name"  required>
+            </div>
+              <div class="form-group">
+                <label for="jobTitle">product_description</label>
+                <input type="text" class="form-control" name="product_description"  required>
+            </div>
+             <div class="form-group">
+                <label for="jobTitle">product_image</label>
+                <input type="file" class="form-control" name="product_image"  required>
+            </div>
+             <div class="form-group">
+                <label for="jobTitle">stock_quantity</label>
+                <input type="number" class="form-control" name="stock_quantity"  required>
+            </div>
+            <div class="form-group">
+                <label for="jobTitle">price</label>
+                <input type="number" class="form-control" name="price"  required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">created_at</label>
+                <input type="date" class="form-control" name="created_at" required>
+            </div>
+            <br>
+      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+    </form>
+  </div>
+
+{% endblock content %}
+
+    
