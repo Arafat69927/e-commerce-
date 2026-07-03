@@ -1,9 +1,42 @@
 {% extends 'master/base.html' %}
 
 {% block content %}
+  
 
-<a href="{% url 'addproduct' %}" class="btn btn-primary btn-sm">+ add addproduct</a>
-    <table class="table">
+{% if request.user.role == 'seller' %}
+  <a href="{% url 'addproduct' %}" class="btn btn-primary btn-sm">+ add addproduct</a>
+{% endif %}
+  
+
+
+
+{% for i in pro_dic %}
+<div class="col-md-4">
+  <div class="card" style="width: 18rem;">
+  <img src="/{{i.product_image}}" class="card-img-top" alt="..." width="65px">
+  <div class="card-body">
+    <h5 class="card-title">product_name:{{i.product_name}}</h5>
+    <p class="card-text">price:{{i.price}}</p>
+    <p class="card-text">stock_quantity:{{i.stock_quantity}}</p>
+    <p class="card-text">created_at:{{i.created_at}}</p>
+    
+    {% if request.user.role == 'Customer' %}
+    <a href="{% url 'addorder' %}" class="btn btn-primary">Order</a>
+    {% endif %}
+      
+   
+  </div>
+</div>
+</div>
+{% endfor %}
+  
+
+{% endblock content %}
+
+
+
+
+{% comment %} <table class="table">
   <thead>
     <tr>
       <th scope="col">Sl</th>
@@ -36,12 +69,10 @@
        <td>
         <a href="{% url 'delete' i.id %}" class="btn btn-danger btn-sm">Delete</a>
         {% comment %} <a href="{% url 'edit' i.id %}" class="btn btn-secondary btn-sm">Edit</a> {% endcomment %}
-       </td>
-    </tr>
-{% endfor %}
+       {% comment %} </td> {% endcomment %}
+    {% comment %} </tr> {% endcomment %}
+{% comment %} {% endfor %} {% endcomment %}
     
  
-  </tbody>
-</table>
-{% endblock content %}
-    
+  {% comment %} </tbody> {% endcomment %}
+{% comment %} </table> {% endcomment %}

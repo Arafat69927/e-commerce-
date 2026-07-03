@@ -11,9 +11,24 @@
 
         {% if request.user.is_authenticated %}
         <a class="nav-link active" aria-current="page" href="{% url 'home_view' %}">Home</a>
+        {% if request.user.role == 'Admin' %}
+        <a class="nav-link" href="{% url 'order_view' %}">order_view</a> 
         <a class="nav-link" href="{% url 'categoty_product' %}">categoty_product</a> 
-          <a class="nav-link" href="{% url 'product' %}">product</a> 
-            {% comment %} <a class="nav-link" href="{% url 'addproduct' %}">add_product</a>  {% endcomment %}
+        <a class="nav-link" href="{% url 'product' %}">product</a> 
+        {% endif %}
+          
+        
+        {% if request.user.role == 'Seller' %}
+        <a class="nav-link" href="{% url 'order_view' %}">order_view</a> 
+        <a class="nav-link" href="{% url 'categoty_product' %}">categoty_product</a> 
+        {% comment %} <a class="nav-link" href="{% url 'product' %}">product</a> {% endcomment %}
+        {% endif %}
+          
+        
+        {% if request.user.role == 'Customer' %}
+       <a class="nav-link" href="{% url 'product' %}">product</a>
+       <a class="nav-link" href="{% url 'order_view' %}">order_view</a> 
+        {% endif %}
 
         <a class="nav-link" href="{% url 'logout_view' %}">LogOut</a>     
        

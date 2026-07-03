@@ -22,8 +22,8 @@
       <td>{{i.description}}</td>
        <td>{{i.created_at}}</td>
        <td>
-        <a href="{% url 'delete' i.id %}" class="btn btn-danger btn-sm">Delete</a>
-        {% comment %} <a href="{% url 'edit' i.id %}" class="btn btn-secondary btn-sm">Edit</a> {% endcomment %}
+      <a href="{% url 'delete' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+      <a href="{% url 'edit' i.id %}" class="btn btn-secondary btn-sm">Edit</a>
        </td>
     </tr>
 {% endfor %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from productmanager.models import *
 from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
@@ -39,6 +39,38 @@ def add_category(req):
 
     return render(req,'add_category.html')
 
+def order_view(req):
+    order_Data = OrderModel.objects.all()
+    context={
+        'order_dic' : order_Data
+    }
+    return render(req,'order.html',context)
+
+def delete_order(req,myid):
+    delete_ord = OrderModel.objects.filter(id=myid)
+    delete_ord.delete()
+    return redirect('order_view')
+
+def addorder(req):
+    for_product = ProductModel.objects.all()
+    
+    context={
+        'product_dic':for_product
+    }
+    if req.method=='POST':
+       product=ProductModel.objects.get(id=req.POST.get('product'))
+       quantity=int(req.POST.get('quantity'))
+       
+       OrderModel.objects.create(
+           customer=req.user,
+           product=product,
+           quantity=quantity,
+           order_status="Pending",
+           total_price=product.price*quantity,
+           
+       )
+       return redirect('order_view')
+    return render(req, 'addorder.html',context)
 
 
 # ------------------------------------------------
@@ -50,29 +82,30 @@ def product(req):
     }
     return render(req,'product.html',context)
 
+
+
 def addproduct(req):
 
-    if req.method == 'POST':
-        if req.user.role == 'seller':
-            category = req.POST.get('category')
-            product_name = req.POST.get('product_name')
-            product_description = req.POST.get('product_description')
-            product_image = req.FILES.get('product_image')
-            stock_quantity = req.POST.get('stock_quantity')
-            price = req.POST.get('price')
+    if req.method == "POST":
+        category = CategoryModel.objects.get(id=req.POST.get("category"))
 
-            ProductModel.objects.create(
-                seller=req.user,
-                category_name=category,
-                product_name=product_name,
-                product_description=product_description,
-                product_image=product_image,
-                price=price,
-                stock_quantity=stock_quantity
-            )
-        return redirect('product')
-    return render(req, 'addproduct.html')
+        ProductModel.objects.create(
+            seller=req.user,
+            category=category,
+            product_name=req.POST.get("product_name"),
+            product_description=req.POST.get("product_description"),
+            product_image=req.FILES.get("product_image"),
+            price=req.POST.get("price"),
+            stock_quantity=req.POST.get("stock_quantity"),
+        )
 
+        return redirect("product")
+
+    categories = CategoryModel.objects.all()
+
+    return render(req, "addproduct.html", {
+        "categories": categories
+    })
 
 
 
@@ -82,24 +115,21 @@ def delete(req,myid):
     delete_data.delete()
     return redirect('categoty_product')
 
-# def edit(req,myid):
-#     edit_data = CategoryModel.objects.filter(id=myid)
-#     context={
-#         'edit_dic':edit_data
-#     }
-#     print(edit_data)
-   
-#     if req.method == 'POST':
-#         category_title=req.POST.get('category_title')
-#         descriptoin=req.POST.get('descriptoin')
-#         created_at=req.POST.get('created_at')
+def edit(req, myid):
+    edit_data = CategoryModel.objects.get(id=myid)
 
-#         edit_data.category_name=category_title
-#         edit_data.description=descriptoin
-#         edit_data.created_at=created_at
-#         edit_data.save()
-      
-#     return render(req,'edit.html',context)
+    if req.method == 'POST':
+        edit_data.category_name = req.POST.get('category_title')
+        edit_data.description = req.POST.get('descriptoin')
+        edit_data.save()
+
+        return redirect('categoty_product')   
+
+    context = {
+        'edit_dic': edit_data
+    }
+
+    return render(req, 'edit.html', context)
 
 # ----------------------------------------------
 # AUTH

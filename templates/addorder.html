@@ -1,0 +1,24 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+<form method='POST'>
+    {% csrf_token %}
+ <div class="form-group">
+<label for="jobTitle">product_name</label>
+<select name="product">
+    
+    {% for i in product_dic %}
+         <option value="{{i.id}}">{{i.product_name}}</option>
+    {% endfor %}
+        
+   
+</select>
+</div>
+<div class="form-group">
+<label for="jobTitle">quantity</label>
+<input type="number" class="form-control" name="quantity"  required>
+</div>
+
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
