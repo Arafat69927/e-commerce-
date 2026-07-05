@@ -1,0 +1,18 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+<form method='POST'>
+    {% csrf_token %}
+ <div class="form-group">
+<label for="jobTitle">order_status</label>
+<select name="filter_name">
+        <option value = "Pending">Pending</option>
+        <option value = "Confirmed">Confirmed</option>
+        <option value = "Cancelled">Cancelled</option>
+</select>
+
+
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

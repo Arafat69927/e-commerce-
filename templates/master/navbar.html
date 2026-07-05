@@ -21,7 +21,7 @@
         {% if request.user.role == 'Seller' %}
         <a class="nav-link" href="{% url 'order_view' %}">order_view</a> 
         <a class="nav-link" href="{% url 'categoty_product' %}">categoty_product</a> 
-        {% comment %} <a class="nav-link" href="{% url 'product' %}">product</a> {% endcomment %}
+        <a class="nav-link" href="{% url 'product' %}">product</a> 
         {% endif %}
           
         

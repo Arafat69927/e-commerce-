@@ -46,6 +46,27 @@ def order_view(req):
     }
     return render(req,'order.html',context)
 
+
+
+def edit_order(req, myid):
+    edit_data = get_object_or_404(OrderModel, id=myid)
+
+    if req.method == "POST":
+        filter_name = req.POST.get("filter_name")
+
+        edit_data.order_status = filter_name
+        edit_data.save()
+
+        return redirect("order_view")   
+
+    context = {
+        "edit_dic": edit_data
+    }
+
+    return render(req, "edit_order.html", context)
+
+
+
 def delete_order(req,myid):
     delete_ord = OrderModel.objects.filter(id=myid)
     delete_ord.delete()

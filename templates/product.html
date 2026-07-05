@@ -3,7 +3,7 @@
 {% block content %}
   
 
-{% if request.user.role == 'seller' %}
+{% if request.user.role == 'Seller' %}
   <a href="{% url 'addproduct' %}" class="btn btn-primary btn-sm">+ add addproduct</a>
 {% endif %}
   
